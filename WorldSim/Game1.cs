@@ -17,6 +17,8 @@ namespace WorldSim
         private Texture2D map;
         private Rectangle mousePos;
         private Country selectedCountry;
+        private UserInterface UI;
+        private bool selected;
         const uint russia = 4294910976;
         const uint norway = 4107724238;
         const uint australia = 4280549599;
@@ -63,6 +65,7 @@ namespace WorldSim
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
+            UI = new UserInterface();
             mousePos = new Rectangle(0, 0, 25, 25);
             Australia = new Country("Australia");
             Russia = new Country("Russia");
@@ -82,8 +85,9 @@ namespace WorldSim
             font = Content.Load<SpriteFont>("MainFont");
             cursor = Content.Load<Texture2D>("cursor");
             map = Content.Load<Texture2D>("map");
-            t2dCountries[0] = Content.Load<Texture2D>("map_AU");
-            t2dCountries[1] = Content.Load<Texture2D>("map_RU");
+            t2dCountries[0] = Content.Load<Texture2D>("Countries/map_AU");
+            t2dCountries[1] = Content.Load<Texture2D>("Countries/map_RU");
+            UI.LoadContent(this);
         }
 
         protected override void UnloadContent()
@@ -112,9 +116,9 @@ namespace WorldSim
 
             switch (sCountry)
             {
-                case australia: selectedCountry = Australia; iCountryToHilight = 0; break;
-                case russia: selectedCountry = Russia; iCountryToHilight = 1; break;
-                default: selectedCountry = null; break;
+                case australia: selected = true; selectedCountry = Australia; iCountryToHilight = 0; break;
+                case russia: selected = true; selectedCountry = Russia; iCountryToHilight = 1; break;
+                default: selected = false; break;
             }
 
             Days = gameTime.TotalGameTime.Seconds;
@@ -135,6 +139,10 @@ namespace WorldSim
             {
                 spriteBatch.Draw(t2dCountries[iCountryToHilight], new Rectangle(0, 0, 1280, 720), Color.White);
             }
+            if (selected == true)
+                UI.Draw(spriteBatch, selectedCountry.Name);
+            else
+                UI.Draw(spriteBatch, "");
             spriteBatch.Draw(cursor, mousePos, Color.White);
             spriteBatch.End();
 

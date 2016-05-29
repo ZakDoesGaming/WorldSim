@@ -44,6 +44,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -55,9 +56,13 @@
   <ItemGroup>
     <Content Include="Content\cursor.png" />
     <Content Include="Content\map.PNG" />
-    <Content Include="Content\map_AU.png" />
-    <Content Include="Content\map_NO.png" />
-    <Content Include="Content\map_RU.png" />
+    <Content Include="Content\Countries\map_AU.png" />
+    <Content Include="Content\Countries\map_NO.png" />
+    <Content Include="Content\Countries\map_RU.png" />
+    <Content Include="Content\UI\Flags\flag_AU.PNG" />
+    <Content Include="Content\UI\uiTexture_noCountry.png" />
+    <Content Include="Content\UI\Flags\flag_RU.PNG" />
+    <Content Include="Content\UI\uiTexture.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
