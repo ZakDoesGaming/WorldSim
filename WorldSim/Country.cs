@@ -37,19 +37,33 @@ namespace WorldSim
                 allies = value;
             }
         }
+        public List<Disease> Diseases
+        {
+            get
+            {
+                return diseases;
+            }
+            set
+            {
+                diseases = value;
+            }
+        }
+        private List<Disease> diseases = new List<Disease>();
+        private List<Country> allies = new List<Country>();
+        private List<Country> enemies = new List<Country>();
         public Country(string countryName)
         {
             this.Name = countryName;
             this.Population = 2;
+            this.Allies.RemoveRange(0, Allies.Count);
+            this.Enemies.RemoveRange(0, Enemies.Count);
+            this.Diseases.RemoveRange(0, Diseases.Count);
         }
         public Country(string countryName, int countryPopulation)
         {
             this.Name = countryName;
             this.Population = countryPopulation;
         }
-        private List<Disease> diseases = new List<Disease>();
-        private List<Country> allies = new List<Country>();
-        private List<Country> enemies = new List<Country>();
         static Random rand = new Random();
 
         public void nextDay()

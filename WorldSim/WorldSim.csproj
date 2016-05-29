@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimatedTexture.cs" />
     <Compile Include="Citizen.cs" />
     <Compile Include="Country.cs" />
     <Compile Include="Disease.cs" />
@@ -59,7 +60,11 @@
     <Content Include="Content\Countries\map_AU.png" />
     <Content Include="Content\Countries\map_NO.png" />
     <Content Include="Content\Countries\map_RU.png" />
+    <Content Include="Content\sea.gif" />
     <Content Include="Content\UI\Flags\flag_AU.PNG" />
+    <Content Include="Content\UI\Icons\infectionAlert_amber.png" />
+    <Content Include="Content\UI\Icons\infectionAlert_red.png" />
+    <Content Include="Content\UI\Icons\warAlert_red.png" />
     <Content Include="Content\UI\uiTexture_noCountry.png" />
     <Content Include="Content\UI\Flags\flag_RU.PNG" />
     <Content Include="Content\UI\uiTexture.png" />

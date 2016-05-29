@@ -30,6 +30,7 @@ namespace WorldSim
         private int dayOfWeek;
         private uint sCountry;
         private string dayName = "Monday";
+        private string[] diseaseNames = new string[5] { "Ebola", "Meme", "Mem", "Trem", "Dem" };
         public int Days
         {
             get
@@ -56,8 +57,13 @@ namespace WorldSim
                 nextYear();
             }
         }
+        private Random rand;
         Country Australia;
         Country Russia;
+        private AnimatedTexture SpriteTexture;
+        private const float Rotation = 0;
+        private const float Scale = 2.0f;
+        private const float Depth = 0.5f;
 
         public Game1()
         {
@@ -65,10 +71,14 @@ namespace WorldSim
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
+            TargetElapsedTime = TimeSpan.FromSeconds(1 / 30.0);
             UI = new UserInterface();
             mousePos = new Rectangle(0, 0, 25, 25);
             Australia = new Country("Australia");
             Russia = new Country("Russia");
+            countries.Add(Australia);
+            countries.Add(Russia);
+            rand = new Random();
         }
 
         protected override void Initialize()
@@ -101,6 +111,7 @@ namespace WorldSim
                 Exit();
 
             var MPos = Mouse.GetState();
+            var KBS = Keyboard.GetState();
 
             mousePos.X = MPos.X;
             mousePos.Y = MPos.Y;
@@ -112,16 +123,14 @@ namespace WorldSim
                 sCountry = colourValue[0];
             }
 
-            Console.WriteLine(sCountry);
-
             switch (sCountry)
             {
                 case australia: selected = true; selectedCountry = Australia; iCountryToHilight = 0; break;
                 case russia: selected = true; selectedCountry = Russia; iCountryToHilight = 1; break;
                 default: selected = false; break;
             }
-
             Days = gameTime.TotalGameTime.Seconds;
+            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             gameYears = gameDays / 365;
 
             base.Update(gameTime);
@@ -131,18 +140,17 @@ namespace WorldSim
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Day " + Days + ": " + dayName, new Vector2(640 - (int)font.MeasureString("Day 999:").X, 360), Color.Black);
-            spriteBatch.DrawString(font, "Year " + Years, new Vector2(640 - (int)font.MeasureString("Day 999:").X, 380), Color.Black);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone);
+            //spriteBatch.Draw(sea, Vector2.Zero, new Rectangle(0, 0, 1280, 720), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             spriteBatch.Draw(map, new Rectangle(0, 0, 1280, 720), Color.White);
             if (iCountryToHilight != -1)
             {
                 spriteBatch.Draw(t2dCountries[iCountryToHilight], new Rectangle(0, 0, 1280, 720), Color.White);
             }
             if (selected == true)
-                UI.Draw(spriteBatch, selectedCountry.Name);
+                UI.Draw(spriteBatch, selectedCountry, font);
             else
-                UI.Draw(spriteBatch, "");
+                UI.Draw(spriteBatch);
             spriteBatch.Draw(cursor, mousePos, Color.White);
             spriteBatch.End();
 
