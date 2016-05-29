@@ -16,11 +16,12 @@ namespace WorldSim
         private Texture2D cursor;
         private Texture2D map;
         private Rectangle mousePos;
-        private string selectedCountry;
-        const uint russia = 4282228480;
+        private Country selectedCountry;
+        const uint russia = 4294910976;
+        const uint norway = 4107724238;
         const uint australia = 4280549599;
         const uint usa = 4278240244;
-        private Texture2D[] t2dCountries = new Texture2D[1];
+        private Texture2D[] t2dCountries = new Texture2D[2];
         private int iCountryToHilight = -1;
         private int gameDays;
         private int gameYears;
@@ -53,8 +54,8 @@ namespace WorldSim
                 nextYear();
             }
         }
-        Country uk;
-        Country au;
+        Country Australia;
+        Country Russia;
 
         public Game1()
         {
@@ -63,10 +64,8 @@ namespace WorldSim
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
             mousePos = new Rectangle(0, 0, 25, 25);
-            uk = new Country("United Kingdom");
-            au = new Country("Australia");
-            countries.Add(uk);
-            countries.Add(au);
+            Australia = new Country("Australia");
+            Russia = new Country("Russia");
         }
 
         protected override void Initialize()
@@ -84,6 +83,7 @@ namespace WorldSim
             cursor = Content.Load<Texture2D>("cursor");
             map = Content.Load<Texture2D>("map");
             t2dCountries[0] = Content.Load<Texture2D>("map_AU");
+            t2dCountries[1] = Content.Load<Texture2D>("map_RU");
         }
 
         protected override void UnloadContent()
@@ -101,20 +101,21 @@ namespace WorldSim
             mousePos.X = MPos.X;
             mousePos.Y = MPos.Y;
             uint[] colourValue = new uint[1];
-            if (MPos.LeftButton == ButtonState.Pressed && MPos.X >= 0 && MPos.X < map.Width && MPos.Y >= 0 && MPos.Y < map.Height)
+            if (MPos.LeftButton == ButtonState.Pressed)
             {
+                Console.WriteLine("Clicked!");
                 map.GetData(0, new Rectangle(MPos.X, MPos.Y, 1, 1), colourValue, 0, 1);
                 sCountry = colourValue[0];
             }
-            
+
+            Console.WriteLine(sCountry);
+
             switch (sCountry)
             {
-                case australia: selectedCountry = "Australia"; iCountryToHilight = 0; break;
-                case russia: selectedCountry = "Russia"; iCountryToHilight = -1; break;
-                case usa: selectedCountry = "USA"; iCountryToHilight = -1; break;
+                case australia: selectedCountry = Australia; iCountryToHilight = 0; break;
+                case russia: selectedCountry = Russia; iCountryToHilight = 1; break;
+                default: selectedCountry = null; break;
             }
-
-            Console.WriteLine(selectedCountry + " was clicked!");
 
             Days = gameTime.TotalGameTime.Seconds;
             gameYears = gameDays / 365;

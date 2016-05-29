@@ -56,6 +56,8 @@
     <Content Include="Content\cursor.png" />
     <Content Include="Content\map.PNG" />
     <Content Include="Content\map_AU.png" />
+    <Content Include="Content\map_NO.png" />
+    <Content Include="Content\map_RU.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
