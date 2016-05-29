@@ -11,6 +11,7 @@ namespace WorldSim
     class UserInterface
     {
         private Texture2D uiTexture;
+        private Texture2D dateTexture;
         private Texture2D uiTextureNoCountry;
         private Texture2D currentFlag;
         private Texture2D[] flags = new Texture2D[2];
@@ -18,6 +19,7 @@ namespace WorldSim
         public void LoadContent(Game game)
         {
             uiTexture = game.Content.Load<Texture2D>("UI/uiTexture");
+            dateTexture = game.Content.Load<Texture2D>("UI/uiTexture_date");
             uiTextureNoCountry = game.Content.Load<Texture2D>("UI/uiTexture_noCountry");
             flags[0] = game.Content.Load<Texture2D>("UI/Flags/flag_RU");
             flags[1] = game.Content.Load<Texture2D>("UI/Flags/flag_AU");
@@ -25,11 +27,14 @@ namespace WorldSim
             icons[1] = game.Content.Load<Texture2D>("UI/Icons/infectionAlert_amber");
             icons[2] = game.Content.Load<Texture2D>("UI/Icons/infectionAlert_red");
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, SpriteFont font, int day, int year)
         {
             spriteBatch.Draw(uiTextureNoCountry, new Rectangle(0, 0, 1280, 720), Color.White);
+            spriteBatch.Draw(dateTexture, new Rectangle(0, 0, 1280, 720), Color.White);
+            spriteBatch.DrawString(font, day.ToString(), new Vector2(78, 20), Color.White);
+            spriteBatch.DrawString(font, year.ToString(), new Vector2(240, 20), Color.White);
         }
-        public void Draw(SpriteBatch spriteBatch, Country selectedCountry, SpriteFont font)
+        public void Draw(SpriteBatch spriteBatch, Country selectedCountry, SpriteFont font, int day, int year)
         {
             switch (selectedCountry.Name)
             {
@@ -38,7 +43,10 @@ namespace WorldSim
             }
             Console.WriteLine(selectedCountry.Population);
             spriteBatch.Draw(uiTexture, new Rectangle(0, 0, 1280, 720), Color.White);
+            spriteBatch.Draw(dateTexture, new Rectangle(0, 0, 1280, 720), Color.White);
             spriteBatch.Draw(currentFlag, new Rectangle(0, 0, 1280, 720), Color.White);
+            spriteBatch.DrawString(font, day.ToString(), new Vector2(78, 20), Color.White);
+            spriteBatch.DrawString(font, year.ToString(), new Vector2(240, 20), Color.White);
             spriteBatch.DrawString(font, selectedCountry.ScienceRating.ToString(), new Vector2(420, 648), Color.White);
             spriteBatch.DrawString(font, selectedCountry.HappinessRating.ToString(), new Vector2(445, 678), Color.White);
             spriteBatch.DrawString(font, selectedCountry.Population.ToString(), new Vector2(620, 678), Color.White);
@@ -48,7 +56,6 @@ namespace WorldSim
                 spriteBatch.Draw(icons[2], new Rectangle(1043, 645, 35, 35), Color.White);
             if (selectedCountry.Enemies.Count > 0)
                 spriteBatch.Draw(icons[0], new Rectangle(1043, 685, 35, 35), Color.White);
-            
         }
     }
 }

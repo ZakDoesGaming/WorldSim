@@ -61,6 +61,7 @@
     <Content Include="Content\Countries\map_NO.png" />
     <Content Include="Content\Countries\map_RU.png" />
     <Content Include="Content\sea.gif" />
+    <Content Include="Content\UI\uiTexture_date.png" />
     <Content Include="Content\UI\Flags\flag_AU.PNG" />
     <Content Include="Content\UI\Icons\infectionAlert_amber.png" />
     <Content Include="Content\UI\Icons\infectionAlert_red.png" />
@@ -69,6 +70,7 @@
     <Content Include="Content\UI\Flags\flag_RU.PNG" />
     <Content Include="Content\UI\uiTexture.png" />
     <Content Include="Icon.ico" />
+    <Content Include="uiTexture_date.png" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />

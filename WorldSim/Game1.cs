@@ -27,6 +27,7 @@ namespace WorldSim
         private int iCountryToHilight = -1;
         private int gameDays;
         private int gameYears;
+        private int daysInYear = 360;
         private int dayOfWeek;
         private uint sCountry;
         private string dayName = "Monday";
@@ -60,10 +61,6 @@ namespace WorldSim
         private Random rand;
         Country Australia;
         Country Russia;
-        private AnimatedTexture SpriteTexture;
-        private const float Rotation = 0;
-        private const float Scale = 2.0f;
-        private const float Depth = 0.5f;
 
         public Game1()
         {
@@ -129,9 +126,9 @@ namespace WorldSim
                 case russia: selected = true; selectedCountry = Russia; iCountryToHilight = 1; break;
                 default: selected = false; break;
             }
-            Days = gameTime.TotalGameTime.Seconds;
+            Days = (int)gameTime.TotalGameTime.TotalSeconds * 2;
+
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            gameYears = gameDays / 365;
 
             base.Update(gameTime);
         }
@@ -146,11 +143,10 @@ namespace WorldSim
             if (iCountryToHilight != -1)
             {
                 spriteBatch.Draw(t2dCountries[iCountryToHilight], new Rectangle(0, 0, 1280, 720), Color.White);
+                UI.Draw(spriteBatch, selectedCountry, font, daysInYear, gameYears);
             }
-            if (selected == true)
-                UI.Draw(spriteBatch, selectedCountry, font);
             else
-                UI.Draw(spriteBatch);
+                UI.Draw(spriteBatch, font, daysInYear, gameYears);
             spriteBatch.Draw(cursor, mousePos, Color.White);
             spriteBatch.End();
 
@@ -163,6 +159,12 @@ namespace WorldSim
             if (dayOfWeek == 7)
                 dayOfWeek = 0;
             dayName = days[dayOfWeek];
+            daysInYear++;
+            if (daysInYear >= 366)
+            {
+                daysInYear = 1;
+                gameYears++;
+            }
             foreach (Country country in countries)
             {
                 country.nextDay();
