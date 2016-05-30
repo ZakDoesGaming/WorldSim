@@ -60,10 +60,22 @@ namespace WorldSim
                 scientificResearch = value;
             }
         }
+        public List<ScienceEvent> CompletedResearch
+        {
+            get
+            {
+                return completedResearch;
+            }
+            set
+            {
+                completedResearch = value;
+            }
+        }
         private List<Disease> diseases = new List<Disease>();
         private List<Country> allies = new List<Country>();
         private List<Country> enemies = new List<Country>();
         private List<ScienceEvent> scientificResearch = new List<ScienceEvent>();
+        private List<ScienceEvent> completedResearch = new List<ScienceEvent>();
         public Country(string countryName)
         {
             this.Name = countryName;
@@ -118,6 +130,7 @@ namespace WorldSim
                     if (scientificResearch[i].DaysResearched == scientificResearch[i].CompletionTime)
                     {
                         Console.WriteLine(this.Name + " has finished researching " + scientificResearch[i].Name);
+                        this.completedResearch.Add(scientificResearch[i]);
                         this.ScientificResearch.RemoveAt(i);      
                         this.ScienceRating++;
                     }

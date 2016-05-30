@@ -14,7 +14,6 @@ namespace WorldSim
         private Texture2D texture;
         private string buttonName;
         private string assetName;
-        private int timeout;
         private bool clicked;
         public bool ButtonActive { get; set; }
         System.Timers.Timer timer = new System.Timers.Timer();

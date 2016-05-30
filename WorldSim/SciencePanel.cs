@@ -38,6 +38,13 @@ namespace WorldSim
                 spriteBatch.DrawString(font, "- " + research.Name, new Vector2(rectangle.X + 20, rectangle.Y + i), Color.White);
                 i += 30;
             }
+            spriteBatch.DrawString(font, "Completed  Research:", new Vector2(rectangle.X + 20, rectangle.Y + i), Color.LightBlue);
+            i += 30;
+            foreach (ScienceEvent research in selectedCountry.CompletedResearch)
+            {
+                spriteBatch.DrawString(font, "- " + research.Name, new Vector2(rectangle.X + 20, rectangle.Y + i), Color.White);
+                i += 30;
+            }
         }
     }
 }
