@@ -49,6 +49,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceEvent.cs" />
+    <Compile Include="DiseasePanel.cs" />
     <Compile Include="SciencePanel.cs" />
     <Compile Include="UserInterface.cs" />
     <Compile Include="WorldEvent.cs" />
@@ -76,6 +77,7 @@
     <Content Include="Content\UI\Flags\flag_MN.png" />
     <Content Include="Content\UI\Icons\icon_happiness.png" />
     <Content Include="Content\UI\Icons\icon_science.png" />
+    <Content Include="Content\UI\Panels\diseasePanel.png" />
     <Content Include="Content\UI\Panels\sciencePanel.png" />
     <Content Include="Content\UI\uiTexture_date.png" />
     <Content Include="Content\UI\Flags\flag_AU.PNG" />

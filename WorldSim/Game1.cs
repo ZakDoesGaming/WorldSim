@@ -177,6 +177,11 @@ namespace WorldSim
                 Russia.startResearch(new ScienceEvent("The Manhattan Project", "Leads to new nuclear discoveries.", 10));
                 Russia.startResearch(new ScienceEvent("The Manhattan Project", "Leads to new nuclear discoveries.", 10));
                 Russia.startResearch(new ScienceEvent("The Manhattan Project", "Leads to new nuclear discoveries.", 10));
+                Russia.giveDisease(new Disease("Ebola", 6, 10));
+                Russia.giveDisease(new Disease("Ebola", 6, 10));
+                Russia.giveDisease(new Disease("Ebola", 6, 10));
+                Russia.giveDisease(new Disease("Ebola", 6, 10));
+                Russia.giveDisease(new Disease("Ebola", 6, 10));
             }
             if (dayOfWeek == 7)
                 dayOfWeek = 0;
