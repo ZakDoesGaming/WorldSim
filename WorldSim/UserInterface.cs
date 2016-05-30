@@ -19,6 +19,7 @@ namespace WorldSim
         private Button[] buttons = new Button[4];
         private SciencePanel sciencePanel;
         private DiseasePanel diseasePanel;
+        private WarPanel warPanel;
         public void LoadContent(Game game)
         {
             uiTexture = game.Content.Load<Texture2D>("UI/uiTexture");
@@ -31,8 +32,8 @@ namespace WorldSim
             flags[4] = game.Content.Load<Texture2D>("UI/Flags/flag_KZ");
             flags[5] = game.Content.Load<Texture2D>("UI/Flags/flag_IN");
             flags[6] = game.Content.Load<Texture2D>("UI/Flags/flag_US");
-            buttons[0] = new Button(new Rectangle(1043, 645, 35, 35), "UI/Icons/infectionAlert_amber", "Amber Disease Alert");
-            buttons[1] = new Button(new Rectangle(1043, 685, 35, 35), "UI/Icons/warAlert_red", "Red War Alert");
+            buttons[0] = new Button(new Rectangle(1043, 645, 35, 35), "UI/Icons/infectionAlert_amber", "Disease Icon");
+            buttons[1] = new Button(new Rectangle(1043, 685, 35, 35), "UI/Icons/warAlert_red", "Relations Icon");
             buttons[2] = new Button(new Rectangle(330, 685, 20, 20), "UI/Icons/icon_happiness", "Happiness Icon");
             buttons[3] = new Button(new Rectangle(330, 655, 20, 20), "UI/Icons/icon_science", "Science Icon");
             buttons[0].ButtonActive = true;
@@ -45,6 +46,9 @@ namespace WorldSim
             diseasePanel = new DiseasePanel("UI/Panels/diseasePanel", new Rectangle(20, 120, 300, 500));
             diseasePanel.LoadContent(game);
             diseasePanel.IsEnabled = false;
+            warPanel = new WarPanel("UI/Panels/warPanel", new Rectangle(20, 120, 300, 500));
+            warPanel.LoadContent(game);
+            warPanel.IsEnabled = false;
             foreach (Button button in buttons)
             {
                 button.clickEvent += OnButtonClick;
@@ -61,6 +65,8 @@ namespace WorldSim
                 sciencePanel.IsEnabled = false;
             if (diseasePanel.IsEnabled)
                 diseasePanel.IsEnabled = false;
+            if (warPanel.IsEnabled)
+                warPanel.IsEnabled = false;
         }
         public void Draw(SpriteBatch spriteBatch, Country selectedCountry, SpriteFont font, int day, int year)
         {
@@ -91,11 +97,14 @@ namespace WorldSim
                 sciencePanel.Draw(spriteBatch, font);
             if (diseasePanel.IsEnabled)
                 diseasePanel.Draw(spriteBatch, font);
+            if (warPanel.IsEnabled)
+                warPanel.Draw(spriteBatch, font);
         }
         public void Update()
         {
             sciencePanel.selectedCountry = selectedCountry;
             diseasePanel.selectedCountry = selectedCountry;
+            warPanel.selectedCountry = selectedCountry;
             foreach (Button button in buttons)
             {
                 button.Update();
@@ -106,14 +115,26 @@ namespace WorldSim
             if (button == "Science Icon")
             {
                 if (diseasePanel.IsEnabled)
-                    diseasePanel.TogglePanel();    
+                    diseasePanel.TogglePanel();  
+                else if (warPanel.IsEnabled)
+                    warPanel.TogglePanel();
                 sciencePanel.TogglePanel();
             }
-            else if (button == "Amber Disease Alert")
+            else if (button == "Disease Icon")
             {
                 if (sciencePanel.IsEnabled)
                     sciencePanel.TogglePanel();
+                else if (warPanel.IsEnabled)
+                    warPanel.TogglePanel();
                 diseasePanel.TogglePanel();
+            }
+            else if (button == "Relations Icon")
+            {
+                if (sciencePanel.IsEnabled)
+                    sciencePanel.TogglePanel();
+                else if (diseasePanel.IsEnabled)
+                    diseasePanel.TogglePanel();
+                warPanel.TogglePanel();
             }
         }
     }
