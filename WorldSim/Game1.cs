@@ -13,25 +13,26 @@ namespace WorldSim
         List<Country> countries = new List<Country>();
         private string[] days = new string[7] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
         private SpriteFont font;
-        private Texture2D cursor;
         private Texture2D map;
         private Rectangle mousePos;
         private Country selectedCountry;
         private UserInterface UI;
-        private bool selected;
+        private NewsFeed News;
         const uint russia = 4294910976;
         const uint norway = 4107724238;
         const uint australia = 4280549599;
         const uint usa = 4278240244;
-        private Texture2D[] t2dCountries = new Texture2D[2];
+        const uint mongolia = 4279646800;
+        private Texture2D[] t2dCountries = new Texture2D[3];
         private int iCountryToHilight = -1;
         private int gameDays;
-        private int gameYears;
-        private int daysInYear = 360;
+        private int gameYears = 2000;
+        private int daysInYear;
         private int dayOfWeek;
         private uint sCountry;
         private string dayName = "Monday";
         private string[] diseaseNames = new string[5] { "Ebola", "Meme", "Mem", "Trem", "Dem" };
+        private EventHandler EventHandler;
         public int Days
         {
             get
@@ -61,6 +62,7 @@ namespace WorldSim
         private Random rand;
         Country Australia;
         Country Russia;
+        Country Mongolia;
 
         public Game1()
         {
@@ -68,13 +70,17 @@ namespace WorldSim
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
             Content.RootDirectory = "Content";
-            TargetElapsedTime = TimeSpan.FromSeconds(1 / 30.0);
+            this.IsMouseVisible = true;
             UI = new UserInterface();
+            EventHandler = new EventHandler();
+            News = new NewsFeed();
             mousePos = new Rectangle(0, 0, 25, 25);
             Australia = new Country("Australia");
             Russia = new Country("Russia");
+            Mongolia = new Country("Mongolia");
             countries.Add(Australia);
             countries.Add(Russia);
+            countries.Add(Mongolia);
             rand = new Random();
         }
 
@@ -90,10 +96,10 @@ namespace WorldSim
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             font = Content.Load<SpriteFont>("MainFont");
-            cursor = Content.Load<Texture2D>("cursor");
             map = Content.Load<Texture2D>("map");
             t2dCountries[0] = Content.Load<Texture2D>("Countries/map_AU");
             t2dCountries[1] = Content.Load<Texture2D>("Countries/map_RU");
+            t2dCountries[2] = Content.Load<Texture2D>("Countries/map_MN");
             UI.LoadContent(this);
         }
 
@@ -122,13 +128,16 @@ namespace WorldSim
 
             switch (sCountry)
             {
-                case australia: selected = true; selectedCountry = Australia; iCountryToHilight = 0; break;
-                case russia: selected = true; selectedCountry = Russia; iCountryToHilight = 1; break;
-                default: selected = false; break;
+                case australia: selectedCountry = Australia; iCountryToHilight = 0; break;
+                case russia: selectedCountry = Russia; iCountryToHilight = 1; break;
+                case mongolia: selectedCountry = Mongolia; iCountryToHilight = 2; break;
+                default: iCountryToHilight = -1; break;
             }
+            Console.WriteLine(sCountry);
             Days = (int)gameTime.TotalGameTime.TotalSeconds * 2;
 
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            News.Update();
 
             base.Update(gameTime);
         }
@@ -147,7 +156,7 @@ namespace WorldSim
             }
             else
                 UI.Draw(spriteBatch, font, daysInYear, gameYears);
-            spriteBatch.Draw(cursor, mousePos, Color.White);
+            News.Draw(spriteBatch, font);
             spriteBatch.End();
 
             base.Draw(gameTime);

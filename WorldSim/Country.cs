@@ -14,6 +14,7 @@ namespace WorldSim
         public int DaysAlive { get; set; }
         public int HappinessRating { get; set; }
         public int ScienceRating { get; set; }
+        public int Wealth { get; set; }
         public Color highlightColour = Color.Yellow;
         public List<Country> Enemies
         {
@@ -63,6 +64,14 @@ namespace WorldSim
         {
             this.Name = countryName;
             this.Population = countryPopulation;
+        }
+        public Country(string countryname, int countryPopulation, int science, int happiness, int money)
+        {
+            this.Name = countryname;
+            this.Population = countryPopulation;
+            this.ScienceRating = science;
+            this.HappinessRating = happiness;
+            this.Wealth = money;
         }
         static Random rand = new Random();
 
