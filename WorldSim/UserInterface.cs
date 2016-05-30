@@ -14,9 +14,10 @@ namespace WorldSim
         private Texture2D dateTexture;
         private Texture2D uiTextureNoCountry;
         private Texture2D currentFlag;
+        private Country selectedCountry;
         private Texture2D[] flags = new Texture2D[5];
-        private Texture2D[] icons = new Texture2D[3];
-        private Button[] buttons = new Button[3];
+        private Button[] buttons = new Button[5];
+        private SciencePanel sciencePanel;
         public void LoadContent(Game game)
         {
             uiTexture = game.Content.Load<Texture2D>("UI/uiTexture");
@@ -27,12 +28,16 @@ namespace WorldSim
             flags[2] = game.Content.Load<Texture2D>("UI/Flags/flag_MN");
             flags[3] = game.Content.Load<Texture2D>("UI/Flags/flag_CN");
             flags[4] = game.Content.Load<Texture2D>("UI/Flags/flag_KZ");
-            icons[0] = game.Content.Load<Texture2D>("UI/Icons/warAlert_red");
-            icons[1] = game.Content.Load<Texture2D>("UI/Icons/infectionAlert_amber");
-            icons[2] = game.Content.Load<Texture2D>("UI/Icons/infectionAlert_red");
             buttons[0] = new Button(new Rectangle(1043, 645, 35, 35), "UI/Icons/infectionAlert_amber", "Amber Disease Alert");
             buttons[1] = new Button(new Rectangle(1043, 645, 35, 35), "UI/Icons/infectionAlert_red", "Red Disease Alert");
             buttons[2] = new Button(new Rectangle(1043, 685, 35, 35), "UI/Icons/warAlert_red", "Red War Alert");
+            buttons[3] = new Button(new Rectangle(330, 685, 20, 20), "UI/Icons/icon_happiness", "Happiness Icon");
+            buttons[4] = new Button(new Rectangle(330, 655, 20, 20), "UI/Icons/icon_science", "Science Icon");
+            buttons[3].ButtonActive = true;
+            buttons[4].ButtonActive = true;
+            sciencePanel = new SciencePanel("UI/Panels/sciencePanel", new Rectangle(0, 0, 300, 500));
+            sciencePanel.LoadContent(game);
+            sciencePanel.IsEnabled = false;
             foreach (Button button in buttons)
             {
                 button.clickEvent += OnButtonClick;
@@ -48,7 +53,8 @@ namespace WorldSim
         }
         public void Draw(SpriteBatch spriteBatch, Country selectedCountry, SpriteFont font, int day, int year)
         {
-            switch (selectedCountry.Name)
+            this.selectedCountry = selectedCountry;
+            switch (this.selectedCountry.Name)
             {
                 case "Russia": currentFlag = flags[0]; break;
                 case "Australia": currentFlag = flags[1]; break;
@@ -61,9 +67,13 @@ namespace WorldSim
             spriteBatch.Draw(currentFlag, new Rectangle(0, 0, 1280, 720), Color.White);
             spriteBatch.DrawString(font, day.ToString(), new Vector2(78, 20), Color.White);
             spriteBatch.DrawString(font, year.ToString(), new Vector2(240, 20), Color.White);
+            buttons[3].Draw(spriteBatch);
+            buttons[4].Draw(spriteBatch);
             spriteBatch.DrawString(font, selectedCountry.ScienceRating.ToString(), new Vector2(420, 648), Color.White);
             spriteBatch.DrawString(font, selectedCountry.HappinessRating.ToString(), new Vector2(445, 678), Color.White);
             spriteBatch.DrawString(font, selectedCountry.Population.ToString(), new Vector2(620, 678), Color.White);
+            if (sciencePanel.IsEnabled)
+                sciencePanel.Draw(spriteBatch, font);
             if (selectedCountry.Diseases.Count > 0 && selectedCountry.Diseases.Count < 3)
             {
                 buttons[2].ButtonActive = false;
@@ -88,6 +98,7 @@ namespace WorldSim
         }
         public void Update()
         {
+            sciencePanel.selectedCountry = selectedCountry;
             foreach (Button button in buttons)
             {
                 button.Update();
@@ -95,7 +106,10 @@ namespace WorldSim
         }
         public void OnButtonClick(string button)
         {
-            Console.WriteLine(button + " was clicked!");
+            if (button == "Science Icon")
+            {
+                sciencePanel.IsEnabled = true;
+            }
         }
     }
 }
