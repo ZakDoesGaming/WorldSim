@@ -15,6 +15,7 @@ namespace WorldSim
         public int HappinessRating { get; set; }
         public int ScienceRating { get; set; }
         public int Wealth { get; set; }
+
         public Color highlightColour = Color.Yellow;
         public List<Country> Enemies
         {
@@ -49,9 +50,20 @@ namespace WorldSim
                 diseases = value;
             }
         }
+        public List<ScienceEvent> ScientificEvents {
+            get
+            {
+                return scientificEvents;
+            }
+            set
+            {
+                scientificEvents = value;
+            }
+        }
         private List<Disease> diseases = new List<Disease>();
         private List<Country> allies = new List<Country>();
         private List<Country> enemies = new List<Country>();
+        private List<ScienceEvent> scientificEvents = new List<ScienceEvent>();
         public Country(string countryName)
         {
             this.Name = countryName;
@@ -110,8 +122,32 @@ namespace WorldSim
 
         public void giveDisease(Disease disease)
         {
-            diseases.Add(disease);
+            this.Diseases.Add(disease);
             Console.WriteLine(this.Name + " is infected with " + disease.name + "!");
+        }
+
+        public void startResearch(ScienceEvent research)
+        {
+            this.ScientificEvents.Add(research);
+            research.DaysResearched = 0;
+            Console.WriteLine(this.Name + " has started research on " + research.Name);
+        }
+
+        public void updateResearch()
+        {
+            foreach (ScienceEvent research in scientificEvents)
+            {
+                if (research.DaysResearched == research.CompletionTime)
+                {
+                    this.ScientificEvents.Remove(research);
+                    Console.WriteLine(this.Name + " has finished researching " + research.Name);
+                    this.ScienceRating++;
+                }
+                else
+                {
+                    research.DaysResearched++;
+                }
+            }
         }
 
         public void makeAlly(Country country)
