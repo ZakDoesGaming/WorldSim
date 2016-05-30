@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Countries\map_CN.png" />
+    <Content Include="Content\Countries\map_KZ.png" />
     <Content Include="Content\Countries\map_MN.png" />
     <Content Include="Content\cursor.png" />
     <Content Include="Content\map.PNG" />
@@ -65,6 +67,8 @@
     <Content Include="Content\Countries\map_NO.png" />
     <Content Include="Content\Countries\map_RU.png" />
     <Content Include="Content\sea.gif" />
+    <Content Include="Content\UI\Flags\flag_CN.PNG" />
+    <Content Include="Content\UI\Flags\flag_KZ.PNG" />
     <Content Include="Content\UI\Flags\flag_MN.png" />
     <Content Include="Content\UI\uiTexture_date.png" />
     <Content Include="Content\UI\Flags\flag_AU.PNG" />

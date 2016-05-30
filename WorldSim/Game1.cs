@@ -17,13 +17,14 @@ namespace WorldSim
         private Rectangle mousePos;
         private Country selectedCountry;
         private UserInterface UI;
-        private NewsFeed News;
         const uint russia = 4294910976;
         const uint norway = 4107724238;
         const uint australia = 4280549599;
         const uint usa = 4278240244;
         const uint mongolia = 4279646800;
-        private Texture2D[] t2dCountries = new Texture2D[3];
+        const uint china = 4282015221;
+        const uint kazakhstan = 4278205951;
+        private Texture2D[] t2dCountries = new Texture2D[5];
         private int iCountryToHilight = -1;
         private int gameDays;
         private int gameYears = 2000;
@@ -64,6 +65,8 @@ namespace WorldSim
         Country Australia;
         Country Russia;
         Country Mongolia;
+        Country China;
+        Country Kazakhstan;
 
         public Game1()
         {
@@ -74,14 +77,17 @@ namespace WorldSim
             this.IsMouseVisible = true;
             UI = new UserInterface();
             EventHandler = new EventHandler();
-            News = new NewsFeed();
             mousePos = new Rectangle(0, 0, 25, 25);
             Australia = new Country("Australia", 190000000);
             Russia = new Country("Russia", 146000000);
             Mongolia = new Country("Mongolia", 2397000);
+            China = new Country("China", 100000000);
+            Kazakhstan = new Country("Kazakhstan", 1488000);
             countries.Add(Australia);
             countries.Add(Russia);
             countries.Add(Mongolia);
+            countries.Add(China);
+            countries.Add(Kazakhstan);
             rand = new Random();
         }
 
@@ -101,6 +107,8 @@ namespace WorldSim
             t2dCountries[0] = Content.Load<Texture2D>("Countries/map_AU");
             t2dCountries[1] = Content.Load<Texture2D>("Countries/map_RU");
             t2dCountries[2] = Content.Load<Texture2D>("Countries/map_MN");
+            t2dCountries[3] = Content.Load<Texture2D>("Countries/map_CN");
+            t2dCountries[4] = Content.Load<Texture2D>("Countries/map_KZ");
             UI.LoadContent(this);
         }
 
@@ -125,18 +133,19 @@ namespace WorldSim
                 map.GetData(0, new Rectangle(MPos.X, MPos.Y, 1, 1), colourValue, 0, 1);
                 sCountry = colourValue[0];
             }
-
+            Console.WriteLine(sCountry);
             switch (sCountry)
             {
                 case australia: selectedCountry = Australia; iCountryToHilight = 0; break;
                 case russia: selectedCountry = Russia; iCountryToHilight = 1; break;
                 case mongolia: selectedCountry = Mongolia; iCountryToHilight = 2; break;
+                case china: selectedCountry = China; iCountryToHilight = 3; break;
+                case kazakhstan: selectedCountry = Kazakhstan; iCountryToHilight = 4; break;
                 default: iCountryToHilight = -1; break;
             }
             Days = (int)gameTime.TotalGameTime.TotalSeconds * 2;
 
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            News.Update();
 
             base.Update(gameTime);
         }
@@ -155,7 +164,6 @@ namespace WorldSim
             }
             else
                 UI.Draw(spriteBatch, font, daysInYear, gameYears);
-            News.Draw(spriteBatch, font);
             spriteBatch.End();
 
             base.Draw(gameTime);

@@ -14,7 +14,7 @@ namespace WorldSim
         private Texture2D dateTexture;
         private Texture2D uiTextureNoCountry;
         private Texture2D currentFlag;
-        private Texture2D[] flags = new Texture2D[3];
+        private Texture2D[] flags = new Texture2D[5];
         private Texture2D[] icons = new Texture2D[3];
         public void LoadContent(Game game)
         {
@@ -24,6 +24,8 @@ namespace WorldSim
             flags[0] = game.Content.Load<Texture2D>("UI/Flags/flag_RU");
             flags[1] = game.Content.Load<Texture2D>("UI/Flags/flag_AU");
             flags[2] = game.Content.Load<Texture2D>("UI/Flags/flag_MN");
+            flags[3] = game.Content.Load<Texture2D>("UI/Flags/flag_CN");
+            flags[4] = game.Content.Load<Texture2D>("UI/Flags/flag_KZ");
             icons[0] = game.Content.Load<Texture2D>("UI/Icons/warAlert_red");
             icons[1] = game.Content.Load<Texture2D>("UI/Icons/infectionAlert_amber");
             icons[2] = game.Content.Load<Texture2D>("UI/Icons/infectionAlert_red");
@@ -42,6 +44,8 @@ namespace WorldSim
                 case "Russia": currentFlag = flags[0]; break;
                 case "Australia": currentFlag = flags[1]; break;
                 case "Mongolia": currentFlag = flags[2]; break;
+                case "China": currentFlag = flags[3]; break;
+                case "Kazakhstan": currentFlag = flags[4]; break;
             }
             Console.WriteLine(selectedCountry.Population);
             spriteBatch.Draw(uiTexture, new Rectangle(0, 0, 1280, 720), Color.White);
