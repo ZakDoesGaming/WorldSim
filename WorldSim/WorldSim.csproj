@@ -63,8 +63,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Countries\map_CN.png" />
+    <Content Include="Content\Countries\map_IN.png" />
     <Content Include="Content\Countries\map_KZ.png" />
     <Content Include="Content\Countries\map_MN.png" />
+    <Content Include="Content\Countries\map_US.png" />
     <Content Include="Content\cursor.png" />
     <Content Include="Content\map.PNG" />
     <Content Include="Content\Countries\map_AU.png" />
@@ -73,8 +75,10 @@
     <Content Include="Content\sea.gif" />
     <Content Include="Content\testButton.png" />
     <Content Include="Content\UI\Flags\flag_CN.PNG" />
+    <Content Include="Content\UI\Flags\flag_IN.png" />
     <Content Include="Content\UI\Flags\flag_KZ.PNG" />
     <Content Include="Content\UI\Flags\flag_MN.png" />
+    <Content Include="Content\UI\Flags\flag_US.png" />
     <Content Include="Content\UI\Icons\icon_happiness.png" />
     <Content Include="Content\UI\Icons\icon_science.png" />
     <Content Include="Content\UI\Panels\diseasePanel.png" />

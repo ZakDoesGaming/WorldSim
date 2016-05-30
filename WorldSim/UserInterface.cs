@@ -15,7 +15,7 @@ namespace WorldSim
         private Texture2D uiTextureNoCountry;
         private Texture2D currentFlag;
         private Country selectedCountry;
-        private Texture2D[] flags = new Texture2D[5];
+        private Texture2D[] flags = new Texture2D[7];
         private Button[] buttons = new Button[4];
         private SciencePanel sciencePanel;
         private DiseasePanel diseasePanel;
@@ -29,6 +29,8 @@ namespace WorldSim
             flags[2] = game.Content.Load<Texture2D>("UI/Flags/flag_MN");
             flags[3] = game.Content.Load<Texture2D>("UI/Flags/flag_CN");
             flags[4] = game.Content.Load<Texture2D>("UI/Flags/flag_KZ");
+            flags[5] = game.Content.Load<Texture2D>("UI/Flags/flag_IN");
+            flags[6] = game.Content.Load<Texture2D>("UI/Flags/flag_US");
             buttons[0] = new Button(new Rectangle(1043, 645, 35, 35), "UI/Icons/infectionAlert_amber", "Amber Disease Alert");
             buttons[1] = new Button(new Rectangle(1043, 685, 35, 35), "UI/Icons/warAlert_red", "Red War Alert");
             buttons[2] = new Button(new Rectangle(330, 685, 20, 20), "UI/Icons/icon_happiness", "Happiness Icon");
@@ -37,10 +39,10 @@ namespace WorldSim
             buttons[1].ButtonActive = true;
             buttons[2].ButtonActive = true;
             buttons[3].ButtonActive = true;
-            sciencePanel = new SciencePanel("UI/Panels/sciencePanel", new Rectangle(0, 120, 300, 500));
+            sciencePanel = new SciencePanel("UI/Panels/sciencePanel", new Rectangle(20, 120, 300, 500));
             sciencePanel.LoadContent(game);
             sciencePanel.IsEnabled = false;
-            diseasePanel = new DiseasePanel("UI/Panels/diseasePanel", new Rectangle(0, 120, 300, 500));
+            diseasePanel = new DiseasePanel("UI/Panels/diseasePanel", new Rectangle(20, 120, 300, 500));
             diseasePanel.LoadContent(game);
             diseasePanel.IsEnabled = false;
             foreach (Button button in buttons)
@@ -70,6 +72,8 @@ namespace WorldSim
                 case "Mongolia": currentFlag = flags[2]; break;
                 case "China": currentFlag = flags[3]; break;
                 case "Kazakhstan": currentFlag = flags[4]; break;
+                case "India": currentFlag = flags[5]; break;
+                case "USA": currentFlag = flags[6]; break;
             }
             spriteBatch.Draw(uiTexture, new Rectangle(0, 0, 1280, 720), Color.White);
             spriteBatch.Draw(dateTexture, new Rectangle(0, 0, 1280, 720), Color.White);

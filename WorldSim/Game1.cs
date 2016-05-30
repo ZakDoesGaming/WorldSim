@@ -20,11 +20,12 @@ namespace WorldSim
         const uint russia = 4294910976;
         const uint norway = 4107724238;
         const uint australia = 4280549599;
-        const uint usa = 4278240244;
         const uint mongolia = 4279646800;
         const uint china = 4282015221;
         const uint kazakhstan = 4278205951;
-        private Texture2D[] t2dCountries = new Texture2D[5];
+        const uint india = 4284506263;
+        const uint usa = 4284338075;
+        private Texture2D[] t2dCountries = new Texture2D[7];
         private int iCountryToHilight = -1;
         private int gameDays;
         private int gameYears = 2000;
@@ -67,7 +68,9 @@ namespace WorldSim
         Country Mongolia;
         Country China;
         Country Kazakhstan;
-
+        Country India;
+        Country USA;
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -83,11 +86,15 @@ namespace WorldSim
             Mongolia = new Country("Mongolia", 2397000);
             China = new Country("China", 100000000);
             Kazakhstan = new Country("Kazakhstan", 1488000);
+            India = new Country("India", 140000000);
+            USA = new Country("USA", 282000000);
             countries.Add(Australia);
             countries.Add(Russia);
             countries.Add(Mongolia);
             countries.Add(China);
             countries.Add(Kazakhstan);
+            countries.Add(India);
+            countries.Add(USA);
             rand = new Random();
         }
 
@@ -109,6 +116,8 @@ namespace WorldSim
             t2dCountries[2] = Content.Load<Texture2D>("Countries/map_MN");
             t2dCountries[3] = Content.Load<Texture2D>("Countries/map_CN");
             t2dCountries[4] = Content.Load<Texture2D>("Countries/map_KZ");
+            t2dCountries[5] = Content.Load<Texture2D>("Countries/map_IN");
+            t2dCountries[6] = Content.Load<Texture2D>("Countries/map_US");
             UI.LoadContent(this);
         }
 
@@ -140,7 +149,10 @@ namespace WorldSim
                 case mongolia: selectedCountry = Mongolia; iCountryToHilight = 2; break;
                 case china: selectedCountry = China; iCountryToHilight = 3; break;
                 case kazakhstan: selectedCountry = Kazakhstan; iCountryToHilight = 4; break;
+                case india: selectedCountry = India; iCountryToHilight = 5; break;
+                case usa: selectedCountry = USA; iCountryToHilight = 6; break;
             }
+            Console.WriteLine(sCountry);
             Days = (int)gameTime.TotalGameTime.TotalSeconds;
             UI.Update();
 
