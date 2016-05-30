@@ -50,20 +50,20 @@ namespace WorldSim
                 diseases = value;
             }
         }
-        public List<ScienceEvent> ScientificEvents {
+        public List<ScienceEvent> ScientificResearch {
             get
             {
-                return scientificEvents;
+                return scientificResearch;
             }
             set
             {
-                scientificEvents = value;
+                scientificResearch = value;
             }
         }
         private List<Disease> diseases = new List<Disease>();
         private List<Country> allies = new List<Country>();
         private List<Country> enemies = new List<Country>();
-        private List<ScienceEvent> scientificEvents = new List<ScienceEvent>();
+        private List<ScienceEvent> scientificResearch = new List<ScienceEvent>();
         public Country(string countryName)
         {
             this.Name = countryName;
@@ -90,7 +90,46 @@ namespace WorldSim
         public void nextDay()
         {
             this.DaysAlive++;
-            this.Population += rand.Next(0, 30) + HappinessRating * ScienceRating;
+            this.Population += rand.Next(1000, 2000) + HappinessRating * ScienceRating;
+            updateDiseases();
+            updateResearch();
+        }
+
+        public void giveDisease(Disease disease)
+        {
+            this.Diseases.Add(disease);
+            Console.WriteLine(this.Name + " is infected with " + disease.name + "!");
+        }
+
+        public void startResearch(ScienceEvent research)
+        {
+            this.ScientificResearch.Add(research);
+            research.DaysResearched = 0;
+            Console.WriteLine(this.Name + " has started research on " + research.Name);
+        }
+
+        public void updateResearch()
+        {
+            if (scientificResearch.Count > 0)
+            {
+                foreach (ScienceEvent research in scientificResearch)
+                {
+                    if (research.DaysResearched == research.CompletionTime)
+                    {
+                        this.ScientificResearch.Remove(research);
+                        Console.WriteLine(this.Name + " has finished researching " + research.Name);
+                        this.ScienceRating++;
+                    }
+                    else
+                    {
+                        research.DaysResearched++;
+                    }
+                }
+            }
+        }
+
+        public void updateDiseases()
+        {
             if (diseases.Count > 0)
             {
                 foreach (Disease disease in diseases.ToArray())
@@ -108,44 +147,14 @@ namespace WorldSim
                         this.Population -= peopleDead;
                         disease.peopleKilled += peopleDead;
                         if (peopleDead > 100)
-                            HappinessRating--;
+                            this.HappinessRating--;
                         else if (peopleDead > 200)
-                            HappinessRating -= 5;
+                            this.HappinessRating -= 5;
                         else if (peopleDead > 500)
-                            HappinessRating -= 10;
+                            this.HappinessRating -= 10;
                         else if (peopleDead > 1000)
-                            HappinessRating -= 20;
+                            this.HappinessRating -= 20;
                     }
-                }
-            }
-        }
-
-        public void giveDisease(Disease disease)
-        {
-            this.Diseases.Add(disease);
-            Console.WriteLine(this.Name + " is infected with " + disease.name + "!");
-        }
-
-        public void startResearch(ScienceEvent research)
-        {
-            this.ScientificEvents.Add(research);
-            research.DaysResearched = 0;
-            Console.WriteLine(this.Name + " has started research on " + research.Name);
-        }
-
-        public void updateResearch()
-        {
-            foreach (ScienceEvent research in scientificEvents)
-            {
-                if (research.DaysResearched == research.CompletionTime)
-                {
-                    this.ScientificEvents.Remove(research);
-                    Console.WriteLine(this.Name + " has finished researching " + research.Name);
-                    this.ScienceRating++;
-                }
-                else
-                {
-                    research.DaysResearched++;
                 }
             }
         }

@@ -133,7 +133,6 @@ namespace WorldSim
                 map.GetData(0, new Rectangle(MPos.X, MPos.Y, 1, 1), colourValue, 0, 1);
                 sCountry = colourValue[0];
             }
-            Console.WriteLine(sCountry);
             switch (sCountry)
             {
                 case australia: selectedCountry = Australia; iCountryToHilight = 0; break;
@@ -143,10 +142,10 @@ namespace WorldSim
                 case kazakhstan: selectedCountry = Kazakhstan; iCountryToHilight = 4; break;
                 default: iCountryToHilight = -1; break;
             }
-            Days = (int)gameTime.TotalGameTime.TotalSeconds * 2;
+            Days = (int)gameTime.TotalGameTime.TotalSeconds;
+            UI.Update();
 
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             base.Update(gameTime);
         }
 
@@ -172,6 +171,10 @@ namespace WorldSim
         void nextDay()
         {
             dayOfWeek++;
+            if (Days > 10)
+            {
+                Russia.giveDisease(new Disease("meme!", 1, 12));
+            }
             if (dayOfWeek == 7)
                 dayOfWeek = 0;
             dayName = days[dayOfWeek];

@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AnimatedTexture.cs" />
+    <Compile Include="Button.cs" />
     <Compile Include="Citizen.cs" />
     <Compile Include="Country.cs" />
     <Compile Include="Disease.cs" />
@@ -47,8 +48,9 @@
     <Compile Include="NewsFeed.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScienceEvent.cs" />
     <Compile Include="UserInterface.cs" />
-    <Compile Include="WorldEvents.cs" />
+    <Compile Include="WorldEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -67,6 +69,7 @@
     <Content Include="Content\Countries\map_NO.png" />
     <Content Include="Content\Countries\map_RU.png" />
     <Content Include="Content\sea.gif" />
+    <Content Include="Content\testButton.png" />
     <Content Include="Content\UI\Flags\flag_CN.PNG" />
     <Content Include="Content\UI\Flags\flag_KZ.PNG" />
     <Content Include="Content\UI\Flags\flag_MN.png" />
