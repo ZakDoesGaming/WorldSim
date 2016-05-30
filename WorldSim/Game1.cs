@@ -29,6 +29,7 @@ namespace WorldSim
         private int gameYears = 2000;
         private int daysInYear;
         private int dayOfWeek;
+        private int worldPopulation;
         private uint sCountry;
         private string dayName = "Monday";
         private string[] diseaseNames = new string[5] { "Ebola", "Meme", "Mem", "Trem", "Dem" };
@@ -75,9 +76,9 @@ namespace WorldSim
             EventHandler = new EventHandler();
             News = new NewsFeed();
             mousePos = new Rectangle(0, 0, 25, 25);
-            Australia = new Country("Australia");
-            Russia = new Country("Russia");
-            Mongolia = new Country("Mongolia");
+            Australia = new Country("Australia", 190000000);
+            Russia = new Country("Russia", 146000000);
+            Mongolia = new Country("Mongolia", 2397000);
             countries.Add(Australia);
             countries.Add(Russia);
             countries.Add(Mongolia);
@@ -121,7 +122,6 @@ namespace WorldSim
             uint[] colourValue = new uint[1];
             if (MPos.LeftButton == ButtonState.Pressed)
             {
-                Console.WriteLine("Clicked!");
                 map.GetData(0, new Rectangle(MPos.X, MPos.Y, 1, 1), colourValue, 0, 1);
                 sCountry = colourValue[0];
             }
@@ -133,7 +133,6 @@ namespace WorldSim
                 case mongolia: selectedCountry = Mongolia; iCountryToHilight = 2; break;
                 default: iCountryToHilight = -1; break;
             }
-            Console.WriteLine(sCountry);
             Days = (int)gameTime.TotalGameTime.TotalSeconds * 2;
 
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -174,11 +173,14 @@ namespace WorldSim
                 daysInYear = 1;
                 gameYears++;
             }
+            worldPopulation = 0;
             foreach (Country country in countries)
             {
                 country.nextDay();
+                worldPopulation += country.Population;
             }
             Console.WriteLine("A new day has dawned... (Day: " + Days + ")");
+            Console.WriteLine("The world's population is now " + worldPopulation);
         }
 
         void nextYear()
