@@ -35,7 +35,7 @@ namespace WorldSim
             buttons[4] = new Button(new Rectangle(330, 655, 20, 20), "UI/Icons/icon_science", "Science Icon");
             buttons[3].ButtonActive = true;
             buttons[4].ButtonActive = true;
-            sciencePanel = new SciencePanel("UI/Panels/sciencePanel", new Rectangle(0, 0, 300, 500));
+            sciencePanel = new SciencePanel("UI/Panels/sciencePanel", new Rectangle(0, 120, 300, 500));
             sciencePanel.LoadContent(game);
             sciencePanel.IsEnabled = false;
             foreach (Button button in buttons)
@@ -50,6 +50,8 @@ namespace WorldSim
             spriteBatch.Draw(dateTexture, new Rectangle(0, 0, 1280, 720), Color.White);
             spriteBatch.DrawString(font, day.ToString(), new Vector2(78, 20), Color.White);
             spriteBatch.DrawString(font, year.ToString(), new Vector2(240, 20), Color.White);
+            if (sciencePanel.IsEnabled)
+                sciencePanel.IsEnabled = false;
         }
         public void Draw(SpriteBatch spriteBatch, Country selectedCountry, SpriteFont font, int day, int year)
         {
@@ -108,7 +110,7 @@ namespace WorldSim
         {
             if (button == "Science Icon")
             {
-                sciencePanel.IsEnabled = true;
+                sciencePanel.TogglePanel();
             }
         }
     }

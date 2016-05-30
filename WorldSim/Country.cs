@@ -112,17 +112,18 @@ namespace WorldSim
         {
             if (scientificResearch.Count > 0)
             {
-                foreach (ScienceEvent research in scientificResearch)
+                for (int i = scientificResearch.Count - 1; i >= 0; i--)
                 {
-                    if (research.DaysResearched == research.CompletionTime)
+                    Console.WriteLine(i);
+                    if (scientificResearch[i].DaysResearched == scientificResearch[i].CompletionTime)
                     {
-                        this.ScientificResearch.Remove(research);
-                        Console.WriteLine(this.Name + " has finished researching " + research.Name);
+                        Console.WriteLine(this.Name + " has finished researching " + scientificResearch[i].Name);
+                        this.ScientificResearch.RemoveAt(i);      
                         this.ScienceRating++;
                     }
                     else
                     {
-                        research.DaysResearched++;
+                        scientificResearch[i].DaysResearched++;
                     }
                 }
             }

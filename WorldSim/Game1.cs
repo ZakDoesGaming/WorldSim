@@ -140,7 +140,6 @@ namespace WorldSim
                 case mongolia: selectedCountry = Mongolia; iCountryToHilight = 2; break;
                 case china: selectedCountry = China; iCountryToHilight = 3; break;
                 case kazakhstan: selectedCountry = Kazakhstan; iCountryToHilight = 4; break;
-                default: iCountryToHilight = -1; break;
             }
             Days = (int)gameTime.TotalGameTime.TotalSeconds;
             UI.Update();
@@ -171,9 +170,13 @@ namespace WorldSim
         void nextDay()
         {
             dayOfWeek++;
-            if (Days > 10)
+            if (Days == 10)
             {
-                Russia.giveDisease(new Disease("meme!", 1, 12));
+                Russia.startResearch(new ScienceEvent("The Manhattan Project", "Leads to new nuclear discoveries.", 10));
+                Russia.startResearch(new ScienceEvent("The Manhattan Project", "Leads to new nuclear discoveries.", 10));
+                Russia.startResearch(new ScienceEvent("The Manhattan Project", "Leads to new nuclear discoveries.", 10));
+                Russia.startResearch(new ScienceEvent("The Manhattan Project", "Leads to new nuclear discoveries.", 10));
+                Russia.startResearch(new ScienceEvent("The Manhattan Project", "Leads to new nuclear discoveries.", 10));
             }
             if (dayOfWeek == 7)
                 dayOfWeek = 0;
