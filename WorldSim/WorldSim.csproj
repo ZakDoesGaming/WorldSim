@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="AnimatedTexture.cs" />
     <Compile Include="Button.cs" />
+    <Compile Include="Camera.cs" />
     <Compile Include="Citizen.cs" />
     <Compile Include="Country.cs" />
     <Compile Include="Disease.cs" />

@@ -17,6 +17,7 @@ namespace WorldSim
         private Rectangle mousePos;
         private Country selectedCountry;
         private UserInterface UI;
+        private Camera cam;
         const uint russia = 4294910976;
         const uint norway = 4107724238;
         const uint australia = 4280549599;
@@ -80,6 +81,7 @@ namespace WorldSim
             this.IsMouseVisible = true;
             UI = new UserInterface();
             EventHandler = new EventHandler();
+            cam = new Camera();
             mousePos = new Rectangle(0, 0, 25, 25);
             Australia = new Country("Australia", 190000000);
             Russia = new Country("Russia", 146000000);
@@ -134,6 +136,9 @@ namespace WorldSim
             var MPos = Mouse.GetState();
             var KBS = Keyboard.GetState();
 
+            if (MPos.X > 1200)
+                cam.Move(new Vector2(10, 0));
+
             mousePos.X = MPos.X;
             mousePos.Y = MPos.Y;
             uint[] colourValue = new uint[1];
@@ -163,13 +168,17 @@ namespace WorldSim
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearWrap, DepthStencilState.Default, RasterizerState.CullNone, null, cam.get_transformation(GraphicsDevice));
             //spriteBatch.Draw(sea, Vector2.Zero, new Rectangle(0, 0, 1280, 720), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             spriteBatch.Draw(map, new Rectangle(0, 0, 1280, 720), Color.White);
             if (iCountryToHilight != -1)
             {
                 spriteBatch.Draw(t2dCountries[iCountryToHilight], new Rectangle(0, 0, 1280, 720), Color.White);
+            }
+            spriteBatch.End();
+            spriteBatch.Begin();
+            if (iCountryToHilight != -1)
+            {
                 UI.Draw(spriteBatch, selectedCountry, font, daysInYear, gameYears);
             }
             else
