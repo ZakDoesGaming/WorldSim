@@ -11,6 +11,7 @@ namespace WorldSim
     {
         protected float _zoom;
         public Matrix _transform;
+        public Vector2 _lastPos;
         public Vector2 _pos;
         public Vector2 Pos
         {
@@ -33,6 +34,14 @@ namespace WorldSim
         public void Move(Vector2 amount)
         {
             _pos += amount;
+            if (_pos.X > 240)
+                _pos.X = 240;
+            else if (_pos.X < -240)
+                _pos.X = -240;
+            if (_pos.Y > 240)
+                _pos.Y = 240;
+            else if (_pos.Y < -240)
+                _pos.Y = -240;
         }
 
         public Matrix get_transformation(GraphicsDevice graphicsDevice)

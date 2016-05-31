@@ -15,7 +15,7 @@ namespace WorldSim
         private Texture2D uiTextureNoCountry;
         private Texture2D currentFlag;
         private Country selectedCountry;
-        private Texture2D[] flags = new Texture2D[7];
+        private Texture2D[] flags = new Texture2D[9];
         private Button[] buttons = new Button[4];
         private SciencePanel sciencePanel;
         private DiseasePanel diseasePanel;
@@ -32,6 +32,8 @@ namespace WorldSim
             flags[4] = game.Content.Load<Texture2D>("UI/Flags/flag_KZ");
             flags[5] = game.Content.Load<Texture2D>("UI/Flags/flag_IN");
             flags[6] = game.Content.Load<Texture2D>("UI/Flags/flag_US");
+            flags[7] = game.Content.Load<Texture2D>("UI/Flags/flag_CAN");
+            flags[8] = game.Content.Load<Texture2D>("UI/Flags/flag_GL");
             buttons[0] = new Button(new Rectangle(1043, 645, 35, 35), "UI/Icons/infectionAlert_amber", "Disease Icon");
             buttons[1] = new Button(new Rectangle(1043, 685, 35, 35), "UI/Icons/warAlert_red", "Relations Icon");
             buttons[2] = new Button(new Rectangle(330, 685, 20, 20), "UI/Icons/icon_happiness", "Happiness Icon");
@@ -80,6 +82,8 @@ namespace WorldSim
                 case "Kazakhstan": currentFlag = flags[4]; break;
                 case "India": currentFlag = flags[5]; break;
                 case "USA": currentFlag = flags[6]; break;
+                case "Canada": currentFlag = flags[7]; break;
+                case "Greenland": currentFlag = flags[8]; break;
             }
             spriteBatch.Draw(uiTexture, new Rectangle(0, 0, 1280, 720), Color.White);
             spriteBatch.Draw(dateTexture, new Rectangle(0, 0, 1280, 720), Color.White);
