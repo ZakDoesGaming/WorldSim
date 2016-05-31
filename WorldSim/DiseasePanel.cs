@@ -30,8 +30,8 @@ namespace WorldSim
         public void Draw(SpriteBatch spriteBatch, SpriteFont font)
         {
             spriteBatch.Draw(texture, rectangle, Color.White);
-            spriteBatch.DrawString(font, "Diseases:", new Vector2(rectangle.X + 20, rectangle.Y + 50), Color.Plum);
-            int i = 80;
+            spriteBatch.DrawString(font, "Diseases:", new Vector2(rectangle.X + 20, rectangle.Y + 20), Color.Plum);
+            int i = 50;
             foreach (Disease disease in selectedCountry.Diseases)
             {
                 spriteBatch.DrawString(font, "- " + disease.name, new Vector2(rectangle.X + 20, rectangle.Y + i), Color.White);
